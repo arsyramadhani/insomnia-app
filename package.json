@@ -1,20 +1,32 @@
 {
-  "name": "insomnia-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "12.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
-  },
-  "devDependencies": {
-    "eslint": "8.9.0",
-    "eslint-config-next": "12.1.0"
-  }
+    "name": "insomnia-app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^1.7.2",
+        "@supabase/supabase-js": "^1.30.3",
+        "@tailwindcss/forms": "^0.4.0",
+        "formik": "^2.2.9",
+        "next": "12.1.0",
+        "react": "17.0.2",
+        "react-dom": "17.0.2",
+        "react-redux": "^7.2.6",
+        "yup": "^0.32.11"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.2",
+        "cssnano": "^5.0.17",
+        "eslint": "8.9.0",
+        "eslint-config-next": "12.1.0",
+        "postcss": "^8.4.6",
+        "prettier": "^2.5.1",
+        "prettier-plugin-tailwindcss": "^0.1.7",
+        "tailwindcss": "^3.0.23"
+    }
 }

@@ -1,0 +1,31 @@
+import Link from "next/link";
+import { useSelector } from "react-redux";
+
+function EditorLeftSidebar({ currentPath }) {
+  const sections = useSelector((state) => state.sections);
+
+  console.log(sections);
+
+  return (
+    <div className="flex h-full w-full flex-col bg-zinc-100">
+      <div className="mb-4 flex items-center justify-between border-b bg-zinc-50 px-4 py-2">
+        <h6 className="font-semibold">Section</h6>
+        <button className="h-8 w-8 rounded-sm bg-zinc-200 text-center text-white">
+          +
+        </button>
+      </div>
+      {sections.map((val, i) => (
+        <div
+          key={i}
+          className="flex items-center justify-between border-b bg-white px-4 py-4 "
+        >
+          <Link href={currentPath + "?p=" + val.id}>
+            <a className="text-sm font-semibold text-zinc-700 ">{val.title}</a>
+          </Link>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default EditorLeftSidebar;
