@@ -51,9 +51,9 @@ const Login = () => {
   return (
     <>
       <div className="w-full  ">
-        <h3 className="mb-1 text-2xl font-bold">Welcome to Haridinanti,</h3>
+        <h3 className="mb-1 text-2xl font-bold">Welcome to Insomnia,</h3>
         <h3 className="text-sm font-medium text-slate-500">
-          Buat undangan pernikahanmu
+          Buat undanganmu sendiri
         </h3>
       </div>
       <div className="h-8"></div>
