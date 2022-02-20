@@ -1,24 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import supabase from "../services/supabaseClient";
 
-const initialState = [
-  {
-    id: "AAxsda4fx",
-    title: "Undangan Pernikahan Bgito & Rihma",
-    last_update: "21 Jan 2022",
-  },
-  {
-    id: "9sKsdP7sf",
-    title: "Undangan Pernikahan Dika & Namy",
-    last_update: "14 Feb 2022",
-  },
-];
+export const fetchUserCollections = createAsyncThunk(
+  "collections/fetchUserCollections",
+  async (_, thunkAPI) => {
+    const { data, error } = await supabase
+      .from("collections")
+      .select("id, title, user_id, created_at");
+    return { data, error };
+  }
+);
 
 export const collectionsSlice = createSlice({
   name: "collections",
-  initialState,
-  reducers: {},
+  initialState: { data: [], status: null },
+  extraReducers: {
+    [fetchUserCollections.pending]: (state, payload) => {
+      state.status = "loading";
+    },
+    [fetchUserCollections.fulfilled]: (state, { payload }) => {
+      state.data = payload.data;
+      state.status = "idle";
+    },
+    [fetchUserCollections.rejected]: (state, payload) => {
+      state.status = "failed";
+    },
+  },
 });
 
-export const { set, unset } = collectionsSlice.actions;
+// export const { fetchUserCollections } = collectionsSlice.actions;
 
 export default collectionsSlice.reducer;

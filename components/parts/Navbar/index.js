@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import supabase from "../../../services/supabaseClient";
+import { fetchScreenByCollectionId } from "../../../store/screensSlice";
 
 const EditorMenu = [
   {
@@ -31,6 +33,7 @@ const EditorMenu = [
 ];
 export default function Navbar() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [currentPath, setCurrentPath] = useState("");
   const [collectionId, setCollectionId] = useState("");
   const logoutUser = async (e) => {
@@ -42,9 +45,16 @@ export default function Navbar() {
   useEffect(() => {
     setCurrentPath(router.pathname);
     setCollectionId(router.query.collectionId);
+    console.log(router.pathname);
   }, [router.pathname, router.query.collectionId]);
 
   console.log(collectionId);
+
+  useEffect(() => {
+    currentPath === "/collections/[collectionId]/design" &&
+      collectionId &&
+      dispatch(fetchScreenByCollectionId(collectionId));
+  }, [currentPath, collectionId, dispatch]);
 
   return (
     <div className=" sticky top-0 flex h-14 items-center justify-between gap-4 border-b bg-neutral-50 px-4">
@@ -52,7 +62,7 @@ export default function Navbar() {
       <div>
         <Link href="/collections">
           <a className="font-['Playfair_Display'] text-xl font-bold text-zinc-800">
-            <span>Haridinanti.</span>
+            <span>Insomnia.app</span>
           </a>
         </Link>
       </div>

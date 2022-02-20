@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-function EditorLeftSidebar({ currentPath }) {
+function EditorLeftSidebar() {
   const sections = useSelector((state) => state.sections);
+  const screens = useSelector((state) => state.screens);
 
-  console.log(sections);
+  console.log(screens);
 
   return (
     <div className="flex h-full w-full flex-col bg-zinc-100">
@@ -14,13 +15,15 @@ function EditorLeftSidebar({ currentPath }) {
           +
         </button>
       </div>
-      {sections.map((val, i) => (
+      {screens.data.map((val, i) => (
         <div
-          key={i}
+          key={val.id}
           className="flex items-center justify-between border-b bg-white px-4 py-4 "
         >
-          <Link href={currentPath + "?p=" + val.id}>
-            <a className="text-sm font-semibold text-zinc-700 ">{val.title}</a>
+          <Link
+            href={"/collections/" + val.collections_id + "/design?p=" + val.id}
+          >
+            <a className="text-sm font-semibold text-zinc-700 ">{val.name}</a>
           </Link>
         </div>
       ))}

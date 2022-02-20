@@ -14,17 +14,10 @@ const EditorLeftSidebar = dynamic(
 );
 
 function Design() {
-  const router = useRouter();
-  const [currentPath, setCurrentPath] = useState("");
-
-  useEffect(() => {
-    setCurrentPath(router.asPath);
-  }, [router.asPath]);
-
   return (
     <>
       <div className="max-h-full w-72 border-r bg-zinc-50">
-        <EditorLeftSidebar currentPath={currentPath} />
+        <EditorLeftSidebar />
       </div>
       <div className="w-96 border-l bg-zinc-50"></div>
       <div className="relative  max-h-full max-w-full flex-1 overflow-y-auto   bg-zinc-100  pt-8">

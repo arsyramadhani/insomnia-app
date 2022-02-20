@@ -39,7 +39,7 @@ const Login = () => {
       session && setIsSuccess(true);
       session &&
         setTimeout(() => {
-          router.push("/login");
+          router.push("/collections");
         }, 2000);
     },
   });
