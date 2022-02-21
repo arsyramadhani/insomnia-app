@@ -43,18 +43,11 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    setCurrentPath(router.pathname);
-    setCollectionId(router.query.collectionId);
-    console.log(router.pathname);
-  }, [router.pathname, router.query.collectionId]);
+    const { query, pathname } = router;
+    pathname !== currentPath && setCurrentPath(pathname);
 
-  console.log(collectionId);
-
-  useEffect(() => {
-    currentPath === "/collections/[collectionId]/design" &&
-      collectionId &&
-      dispatch(fetchScreenByCollectionId(collectionId));
-  }, [currentPath, collectionId, dispatch]);
+    collectionId !== query.collectionId && setCollectionId(query.collectionId);
+  }, [router.query, router.pathname]);
 
   return (
     <div className=" sticky top-0 flex h-14 items-center justify-between gap-4 border-b bg-neutral-50 px-4">
@@ -86,21 +79,19 @@ function EditorNavigation({ collectionId, pathName }) {
   return (
     <ul className="flex h-full w-full flex-1 justify-end justify-items-center gap-1 text-sm font-semibold text-zinc-700  ">
       {EditorMenu.map((val, i) => (
-        <li
-          key={i}
-          className="relative my-auto flex h-full w-fit cursor-pointer flex-col items-center justify-center   px-2   text-center"
+        <Link
+          href={"/collections/" + collectionId + "/" + val.title.toLowerCase()}
         >
-          <Link
-            href={
-              "/collections/" + collectionId + "/" + val.title.toLowerCase()
-            }
+          <li
+            key={i}
+            className="relative my-auto flex h-full w-fit cursor-pointer flex-col items-center justify-center   px-2   text-center"
           >
             <a>{val.title}</a>
-          </Link>
-          {val.path === pathName && (
-            <div className="absolute bottom-0 h-[3px] w-full bg-zinc-600" />
-          )}
-        </li>
+            {val.path === pathName && (
+              <div className="absolute bottom-0 h-[3px] w-full bg-zinc-600" />
+            )}
+          </li>
+        </Link>
       ))}
     </ul>
   );

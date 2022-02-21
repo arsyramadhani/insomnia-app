@@ -11,7 +11,7 @@ const scaleConstant = [
   "scale-[100%]",
 ];
 
-function EditorView() {
+function EditorView({ children }) {
   const [viewScale, setViewScale] = useState(4);
 
   const scaleUp = () => {
@@ -23,11 +23,19 @@ function EditorView() {
 
   return (
     <>
-      <div className="top-0 mx-auto h-[914px] w-[412px]  ">
+      <div className="top-0 mx-auto h-fit w-fit  ">
         <div
-          className={`h-full w-full origin-top ${scaleConstant[viewScale]}	rounded-lg    border border-zinc-300 bg-zinc-300`}
+          className={`h-fit w-fit origin-top ${scaleConstant[viewScale]}	rounded-lg    border border-zinc-300 bg-zinc-300`}
         >
-          asdasddaksljsa {viewScale}
+          <div className="flex h-[914px] w-[412px] flex-col items-center justify-center p-8">
+            <textarea
+              type="text"
+              name="test"
+              id=""
+              placeholder="type here to startss"
+              className="ring-none    w-full resize-y overflow-hidden  border-none bg-transparent text-center text-2xl font-bold outline-none outline-transparent"
+            />
+          </div>
         </div>
       </div>
       <div className="sticky bottom-4   right-4 ml-auto flex w-fit items-center rounded-md bg-zinc-800 font-normal text-white  ">

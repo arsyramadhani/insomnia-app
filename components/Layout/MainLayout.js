@@ -11,9 +11,8 @@ const MainLayout = ({ children }) => {
 
   useEffect(() => {
     const session = supabase.auth.session();
-    console.log(session);
     !session && router.push("/auth/login");
-  }, [router]);
+  }, [router.pathname]);
 
   return (
     <Provider store={store}>
