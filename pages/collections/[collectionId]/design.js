@@ -33,7 +33,7 @@ export default function Design() {
     query.collectionId &&
       cId !== query.collectionId &&
       dispatch(fetchScreenByCollectionId(query.collectionId));
-  }, [router.query]);
+  }, [router.query, cId, currentPath, dispatch, router]);
 
   useEffect(() => {
     data.length > 0 &&
@@ -41,11 +41,11 @@ export default function Design() {
       router.push(
         router.pathname.replace("[collectionId]", cId) + "?p=" + data[0].id
       );
-  }, [data, cId]);
+  }, [data, cId, router]);
 
   useEffect(() => {
     currentScreen !== router.query.p && setCurrentScreen(router.query.p);
-  }, [router.query.p]);
+  }, [router.query.p, currentScreen]);
 
   const clickHandler = (path) => {
     router.push(path);

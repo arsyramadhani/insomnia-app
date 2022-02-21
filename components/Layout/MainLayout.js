@@ -12,7 +12,7 @@ const MainLayout = ({ children }) => {
   useEffect(() => {
     const session = supabase.auth.session();
     !session && router.push("/auth/login");
-  }, [router.pathname]);
+  }, [router]);
 
   return (
     <Provider store={store}>
