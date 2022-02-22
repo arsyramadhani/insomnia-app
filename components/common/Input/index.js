@@ -8,7 +8,7 @@ function Input({ type, placeholder, value, onChange, onBlur, error, ...rest }) {
       value={value}
       onBlur={onBlur}
       onChange={onChange}
-      className={` w-full select-auto rounded-md   focus:ring-offset-0
+      className={`form-input w-full select-auto rounded-md   focus:ring-offset-0
             ${
               error
                 ? "border-red-600  focus:border-red-500 focus:ring-red-500"

@@ -8,6 +8,7 @@ export default function Navbar({ editorMenu, query, currentPath }) {
     const { error } = await supabase.auth.signOut();
     !error && router.push("/auth/login");
   };
+
   return (
     <div className=" sticky top-0 flex h-14 items-center justify-between gap-4 border-b bg-neutral-50 px-4">
       {/* Logo */}

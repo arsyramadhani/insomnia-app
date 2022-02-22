@@ -11,7 +11,7 @@ const scaleConstant = [
   "scale-[100%]",
 ];
 
-function EditorView() {
+function EditorView({ children }) {
   const [viewScale, setViewScale] = useState(4);
 
   const scaleUp = () => {
