@@ -13,16 +13,16 @@ export const fetchUserCollections = createAsyncThunk(
 
 export const collectionsSlice = createSlice({
   name: "collections",
-  initialState: { data: [], status: null },
+  initialState: { data: [], status: "idle" },
   extraReducers: {
-    [fetchUserCollections.pending]: (state, payload) => {
+    [fetchUserCollections.pending]: (state) => {
       state.status = "loading";
     },
     [fetchUserCollections.fulfilled]: (state, { payload }) => {
       state.data = payload.data;
       state.status = "idle";
     },
-    [fetchUserCollections.rejected]: (state, payload) => {
+    [fetchUserCollections.rejected]: (state) => {
       state.status = "failed";
     },
   },
