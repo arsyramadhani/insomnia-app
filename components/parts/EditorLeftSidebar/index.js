@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-function EditorLeftSidebar() {
-  const sections = useSelector((state) => state.sections);
-  const screens = useSelector((state) => state.screens);
-
-  console.log(screens);
+function EditorLeftSidebar({ screens }) {
+  //   useEffect(() => {
+  //     console.log("Rerender");
+  //   }, []);
 
   return (
     <div className="flex h-full w-full flex-col bg-zinc-100">
