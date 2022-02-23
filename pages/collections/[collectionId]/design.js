@@ -9,7 +9,7 @@ import EditorOptions from "../../../components/parts/EditorOptions";
 import EditorView from "../../../components/parts/EditorView";
 import { fetchScreenByCollectionId } from "../../../store/screensSlice";
 
-function Design() {
+export default function Design() {
   const router = useRouter();
   const screens = useSelector((state) => state.screens);
   const dispatch = useDispatch();
