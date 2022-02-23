@@ -41,7 +41,7 @@ export default function Design() {
         <EditorOptions />
       </div>
       <div className="relative  max-h-full max-w-full flex-1 overflow-y-auto   bg-zinc-100  pt-8">
-        {data.length > 0 ? <EditorView /> : <BlankEditorView />}
+        <EditorView />
       </div>
     </>
   );
