@@ -1,4 +1,6 @@
+
 function EditorLeftSidebar({ screens, clickHandler, currentScreen }) {
+  
   return (
     <div className="flex h-full w-full flex-col bg-zinc-50">
       <div className="mb-4 flex items-center justify-between border-b bg-zinc-50 px-4 py-2">

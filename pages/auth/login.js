@@ -49,7 +49,7 @@ const Login = () => {
       const session = supabase.auth.session();
       console.log(session);
 
-      session && router.push("/login");
+      session && router.push("/collections");
     };
     fetchUser();
   }, [router]);

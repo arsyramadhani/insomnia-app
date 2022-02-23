@@ -1,66 +1,43 @@
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import MainLayout from "../../../components/Layout/MainLayout";
+
+import EditorLeftSidebar from "../../../components/parts/EditorLeftSidebar";
 import EditorOptions from "../../../components/parts/EditorOptions";
-import LoadingScreen from "../../../components/parts/LoadingScreen";
+import EditorView from "../../../components/parts/EditorView";
 import { fetchScreenByCollectionId } from "../../../store/screensSlice";
 
-const EditorView = dynamic(
-  () => import("../../../components/parts/EditorView"),
-  { loading: () => <LoadingScreen /> }
-);
-const EditorLeftSidebar = dynamic(
-  () => import("../../../components/parts/EditorLeftSidebar"),
-  { loading: () => <LoadingScreen /> }
-);
-
-export default function Design() {
-  const { data, status } = useSelector((state) => state.screens);
-  const [cId, setCId] = useState("");
-  const [currentPath, setCurrentPath] = useState("");
-  const [currentScreen, setCurrentScreen] = useState("");
-  const dispatch = useDispatch();
+function Design() {
   const router = useRouter();
-  useEffect(() => {
-    const { query, route } = router;
-
-    cId !== query.collectionId && setCId(query.collectionId);
-    currentPath !== route && setCurrentPath(route);
-
-    query.collectionId &&
-      cId !== query.collectionId &&
-      dispatch(fetchScreenByCollectionId(query.collectionId));
-  }, [router.query, cId, currentPath, dispatch, router]);
+  const screens = useSelector((state) => state.screens);
+  const dispatch = useDispatch();
+  const [cId, setCId] = useState("");
 
   useEffect(() => {
-    data.length > 0 &&
-      cId &&
-      router.push(
-        router.pathname.replace("[collectionId]", cId) + "?p=" + data[0].id
-      );
-  }, [data, cId, router]);
+    router.query.collectionId && setCId(router.query.collectionId);
+    console.log(router.query.collectionId);
+    return () => {
+      setCId("");
+    };
+  }, [router.query.collectionId]);
 
   useEffect(() => {
-    currentScreen !== router.query.p && setCurrentScreen(router.query.p);
-  }, [router.query.p, currentScreen]);
+    if (cId) {
+      dispatch(fetchScreenByCollectionId(cId));
+      console.log("ok");
+    }
+  }, [dispatch, cId]);
 
-  const clickHandler = (path) => {
-    router.push(path);
-  };
 
   return (
     <>
       <div className="max-h-full w-72 border-r bg-zinc-50">
-        <EditorLeftSidebar
-          screens={data}
-          clickHandler={clickHandler}
-          currentScreen={currentScreen}
-        />
+        <EditorLeftSidebar screens={screens} />
       </div>
-      <div className="w-72   border-r bg-zinc-50">
+      <div className="w-72 border-l bg-zinc-50">
+
         <EditorOptions />
       </div>
       <div className="relative  max-h-full max-w-full flex-1 overflow-y-auto   bg-zinc-100  pt-8">

@@ -7,11 +7,11 @@ import { fetchUserCollections } from "../../store/collectionsSlice";
 
 function Collections() {
   const listCollections = useSelector((state) => state.collections);
-  console.log(listCollections.data);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchUserCollections());
+    // console.log(listCollections);
   }, [dispatch]);
 
   return (
@@ -34,7 +34,13 @@ function Collections() {
               className="flex w-full   items-center justify-between rounded-md border bg-zinc-50 px-6 py-4 shadow-sm shadow-zinc-200 transition-all hover:shadow-md"
             >
               <div>
-                <Link href={"/collections/" + val.id + "/overview"}>
+                <Link
+                  href={{
+                    pathname: "/collections/[collectionId]/overview",
+                    query: { collectionId: val.id },
+                  }}
+                  // href={"/collections/" + val.id + "/overview"}
+                >
                   <a className="font-medium text-zinc-800">{val.title}</a>
                 </Link>
                 <p className="text-sm font-normal text-zinc-600">

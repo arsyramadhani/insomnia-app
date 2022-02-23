@@ -1,6 +1,7 @@
-import Input from "../../common/Input";
+
 
 export default function EditorOptions() {
+  
   return (
     <div className="flex h-full w-full flex-col p-4">
       <p className="mb-2">Settings</p>
@@ -15,3 +16,5 @@ export default function EditorOptions() {
     </div>
   );
 }
+
+export default EditorOptions;
