@@ -1,6 +1,5 @@
-
 function EditorLeftSidebar({ screens, clickHandler, currentScreen }) {
-  
+  //   console.log(screens);
   return (
     <div className="flex h-full w-full flex-col bg-zinc-50">
       <div className="mb-4 flex items-center justify-between border-b bg-zinc-50 px-4 py-2">
@@ -9,8 +8,8 @@ function EditorLeftSidebar({ screens, clickHandler, currentScreen }) {
           +
         </button>
       </div>
-      {screens.length > 0 &&
-        screens.map((val, i) => (
+      {screens.data.length > 0 &&
+        screens.data.map((val, i) => (
           <div
             key={val.id}
             className={`flex cursor-pointer items-center justify-between border-b transition-all	 duration-75 ${

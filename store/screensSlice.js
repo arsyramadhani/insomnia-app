@@ -25,7 +25,7 @@ export const screensSlice = createSlice({
       state.status = "idle";
     },
     [fetchScreenByCollectionId.rejected]: (state, payload) => {
-      state.status = "failed";
+      state.status = "error";
     },
   },
 });

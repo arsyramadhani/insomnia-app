@@ -7,41 +7,64 @@ import MainLayout from "../../../components/Layout/MainLayout";
 import EditorLeftSidebar from "../../../components/parts/EditorLeftSidebar";
 import EditorOptions from "../../../components/parts/EditorOptions";
 import EditorView from "../../../components/parts/EditorView";
+import EditorViewBox from "../../../components/parts/EditorViewBox";
 import { fetchScreenByCollectionId } from "../../../store/screensSlice";
 
 export default function Design() {
   const router = useRouter();
   const screens = useSelector((state) => state.screens);
   const dispatch = useDispatch();
-  const [cId, setCId] = useState("");
+  const [collectionId, setCollectionId] = useState("");
+  const [currentScreen, setCurrentScreen] = useState("");
 
   useEffect(() => {
-    router.query.collectionId && setCId(router.query.collectionId);
-    console.log(router.query.collectionId);
-    return () => {
-      setCId("");
-    };
-  }, [router.query.collectionId]);
-
-  useEffect(() => {
-    if (cId) {
-      dispatch(fetchScreenByCollectionId(cId));
-      console.log("ok");
+    if (router.query.collectionId) {
+      setCollectionId(router.query.collectionId);
+      console.log(router.query.collectionId);
     }
-  }, [dispatch, cId]);
+    if (router.query.p) {
+      setCurrentScreen(router.query.p);
+      console.log("currentScreen");
+    }
+    return () => {
+      setCollectionId("");
+      setCurrentScreen("");
+    };
+  }, [router.query]);
 
+  useEffect(() => {
+    if (collectionId !== "") {
+      dispatch(fetchScreenByCollectionId(collectionId));
+      console.log("dispatched");
+    }
+  }, [dispatch, collectionId]);
+
+  const clickHandler = (param) => {
+    router.push(param);
+  };
 
   return (
     <>
       <div className="max-h-full w-72 border-r bg-zinc-50">
-        <EditorLeftSidebar screens={screens} />
+        <EditorLeftSidebar screens={screens} clickHandler={clickHandler} />
       </div>
-      <div className="w-72 border-l bg-zinc-50">
+      {currentScreen && (
+        <div className="w-72 border-l bg-zinc-50">
+          <EditorOptions />
+        </div>
+      )}
 
-        <EditorOptions />
-      </div>
-      <div className="relative  max-h-full max-w-full flex-1 overflow-y-auto   bg-zinc-100  pt-8">
-        <EditorView />
+      <div className="   flex  min-h-full  flex-1  flex-col overflow-y-auto">
+        {currentScreen ? (
+          <EditorViewBox height={900} width={400} scale={60}>
+            <div className=" flex h-full w-full flex-col justify-center bg-yellow-50 p-4">
+              <h1 className="text-2xl">Testing</h1>
+              asdasdsaasdasdasds
+            </div>
+          </EditorViewBox>
+        ) : (
+          <BlankEditorView />
+        )}
       </div>
     </>
   );
@@ -50,7 +73,7 @@ export default function Design() {
 function BlankEditorView() {
   return (
     <div className="  -mt-4 flex h-full w-full  flex-col items-center justify-center  ">
-      <p>Please add some screen to start</p>
+      <p>Please add or select some screen</p>
     </div>
   );
 }
