@@ -1,15 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "../../../components/Layout/MainLayout";
 import EditorContent from "../../../components/parts/EditorContent";
-
 import EditorLeftSidebar from "../../../components/parts/EditorLeftSidebar";
 import EditorOptions from "../../../components/parts/EditorOptions";
-import EditorView from "../../../components/parts/EditorView";
 import EditorViewBox from "../../../components/parts/EditorViewBox";
 import { fetchScreenByCollectionId } from "../../../store/screensSlice";
+import { filterSection } from "../../../store/sectionsSlice";
 
 export default function Design() {
   const router = useRouter();
@@ -17,15 +15,15 @@ export default function Design() {
   const dispatch = useDispatch();
   const [collectionId, setCollectionId] = useState("");
   const [currentScreen, setCurrentScreen] = useState("");
+  const sections = useSelector((state) => state.sections.data);
+  const currentData = useSelector((state) => state.sections.data);
 
   useEffect(() => {
     if (router.query.collectionId) {
       setCollectionId(router.query.collectionId);
-      console.log(router.query.collectionId);
     }
     if (router.query.p) {
       setCurrentScreen(router.query.p);
-      console.log("currentScreen");
     }
     return () => {
       setCollectionId("");
@@ -44,25 +42,31 @@ export default function Design() {
     router.push(param);
   };
 
+  const theme = {};
+
+  useEffect(() => {
+    currentScreen && dispatch(filterSection(currentScreen));
+  }, [dispatch, currentScreen]);
+
   return (
     <>
       <div className="max-h-full w-72 border-r bg-zinc-50">
         <EditorLeftSidebar screens={screens} clickHandler={clickHandler} />
       </div>
-      {currentScreen && (
-        <div className="w-72 border-l bg-zinc-50">
-          <EditorOptions />
-        </div>
-      )}
-      <div className="   flex  min-h-full  flex-1  flex-col overflow-y-auto">
-        {currentScreen ? (
-          <EditorViewBox height={900} width={400} scale={60}>
-            <EditorContent />
+      <div className="  relative flex h-full min-h-full  flex-1  flex-col overflow-y-auto">
+        {currentData ? (
+          <EditorViewBox height={800} width={414} scale={80}>
+            <EditorContent data={currentData} />
           </EditorViewBox>
         ) : (
           <BlankEditorView />
         )}
       </div>
+      {currentData && (
+        <div className="w-72 border-l bg-zinc-50">
+          <EditorOptions data={currentData} />
+        </div>
+      )}
     </>
   );
 }

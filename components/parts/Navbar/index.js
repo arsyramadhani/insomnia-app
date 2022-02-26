@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import supabase from "../../../services/supabaseClient";
 
 export default function Navbar({ editorMenu, query, currentPath }) {
+  const router = useRouter();
   const logoutUser = async (e) => {
     e.preventDefault();
     const { error } = await supabase.auth.signOut();

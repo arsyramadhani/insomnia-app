@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function EditorViewBox({ height, width, scale, children }) {
+function EditorViewBox({ height, width, scale = 60, children }) {
   const [viewBox, setViewBox] = useState({ height: 0, width: 0 });
   const [originSize, setOriginSize] = useState({
     height: height,
@@ -15,13 +15,6 @@ function EditorViewBox({ height, width, scale, children }) {
   function scaleDown() {
     setViewScale((state) => (state > 10 ? state - 10 : 10));
   }
-
-  //   console.log({
-  //     viewScale: viewScale,
-  //     originSize: originSize,
-  //     viewBox: viewBox,
-  //   });
-
   useEffect(() => {
     setOriginSize({
       height: height,
@@ -43,25 +36,10 @@ function EditorViewBox({ height, width, scale, children }) {
     console.log("viewscale");
   }, [viewScale, originSize]);
 
-  //   useEffect(() => {
-  //     if (viewBox.height > 0 && !isViewBoxShow) {
-  //       setisViewBoxShow(true);
-  //       console.log("viewBox");
-  //     }
-  //   }, [viewBox]);
-
   return (
     <>
       {viewBox.height > 0 && (
         <>
-          {/* <div
-            style={{
-              backgroundColor: "green",
-              height: "20px",
-              width: "100%",
-              zIndex: "10",
-            }}
-          ></div> */}
           <div
             className="origin-top-left transform transition-all  "
             style={{
@@ -84,7 +62,7 @@ function EditorViewBox({ height, width, scale, children }) {
           </div>
         </>
       )}
-      <div className="absolute   bottom-4  right-4 ml-auto flex h-10 w-fit items-center rounded-md bg-zinc-800 font-normal text-white  ">
+      <div className="sticky   bottom-4  right-4 ml-auto flex h-10 w-fit items-center rounded-md bg-zinc-800 font-normal text-white  ">
         <button onClick={scaleDown} className="h-10 w-10 ">
           -
         </button>

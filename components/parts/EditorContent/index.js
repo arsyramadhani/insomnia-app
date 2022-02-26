@@ -1,53 +1,77 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { changeMetadata } from "../../../store/sectionsSlice";
+import TextAreaAutoHeight from "../../common/TextAreaAutoHeight";
 
-function EditorContent() {
+function EditorContent({ data }) {
+  const dispatch = useDispatch();
+  if (!data) {
+    return (
+      <div
+        className={`flex h-full w-full flex-col items-center  bg-slate-200 p-4`}
+      ></div>
+    );
+  }
+  console.log(data);
+  if (data.type === "welcome") {
+    // console.log(data.config.display.fontSize);
+    return (
+      <div
+        className={`flex h-full w-full flex-col items-center ${data.config.position} bg-slate-200 p-4`}
+      >
+        {data.metadata.title && (
+          <TextAreaAutoHeight
+            fontSize={data.config.display.fontSize}
+            fontWeight={data.config.display.fontWeight}
+            maxRows={2}
+            value={data.metadata.title}
+            onChange={(value) =>
+              dispatch(
+                changeMetadata({
+                  type: "title",
+                  data: value,
+                })
+              )
+            }
+          />
+        )}
+      </div>
+    );
+  }
+
   return (
-    <div className=" flex h-full w-full flex-col items-center justify-center bg-slate-200 p-4">
-      {/* <h1 className="text-2xl">Testing</h1> */}
-      <TextAreaAutoHeight fontSize={"text-2xl"} />
+    <div
+      className={`flex h-full w-full flex-col items-center  bg-slate-200 p-4`}
+    >
+      {/* {data.metadata.attribute1 && (
+        <TextAreaAutoHeight
+          fontSize={config.body.fontSize}
+          fontWeight={config.body.fontWeight}
+          maxRows={1}
+          value={data.metadata.attribute1}
+          onChange={(e) => console.log(e)}
+        />
+      )}
+      {data.metadata.title && (
+        <TextAreaAutoHeight
+          fontSize={config.display.fontSize}
+          fontWeight={config.display.fontWeight}
+          maxRows={2}
+          value={data.metadata.title}
+          onChange={(e) => console.log(e)}
+        />
+      )}
+      {data.metadata.date && (
+        <TextAreaAutoHeight
+          fontSize={config.body.fontSize}
+          fontWeight={config.body.fontWeight}
+          maxRows={2}
+          disabled
+          value={data.metadata.date}
+          onChange={(e) => console.log(e)}
+        />
+      )} */}
     </div>
-  );
-}
-
-function TextAreaAutoHeight({
-  value = "Type some Text here",
-  fontSize = "text-lg",
-}) {
-  const textAreaRef = useRef(null);
-  const hiddenRef = useRef(null);
-  const [currentValue, setCurrentValue] = useState(value);
-  const [fixScrollHeight, setFixScrollHeight] = useState(0);
-
-  useEffect(() => {
-    textAreaRef.current.style.height = "0px";
-    const scrollHeight = textAreaRef.current.scrollHeight;
-
-    if (scrollHeight % fixScrollHeight !== 0) {
-      setFixScrollHeight(scrollHeight);
-    }
-
-    textAreaRef.current.style.height =
-      scrollHeight <= fixScrollHeight * 2
-        ? scrollHeight + 0 + "px"
-        : fixScrollHeight * 2 + 0 + "px";
-  }, [currentValue, fixScrollHeight]);
-
-  const changeHandler = (e) => {
-    const scrollHeight = textAreaRef.current.scrollHeight;
-    if (scrollHeight <= fixScrollHeight * 2) {
-      setCurrentValue(e.target.value.trimStart());
-    }
-  };
-
-  return (
-    <>
-      <textarea
-        ref={textAreaRef}
-        className={`block w-full   resize-none appearance-none overflow-hidden rounded-md  border-2  border-solid border-transparent bg-transparent text-center ${fontSize}    outline-none  focus:border-dashed   focus:border-gray-700`}
-        value={currentValue}
-        onChange={(e) => changeHandler(e)}
-      ></textarea>
-    </>
   );
 }
 
