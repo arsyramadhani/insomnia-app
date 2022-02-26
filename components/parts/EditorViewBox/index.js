@@ -41,7 +41,7 @@ function EditorViewBox({ height, width, scale, children }) {
       width: originSize.width * (viewScale / 100),
     });
     console.log("viewscale");
-  }, [viewScale]);
+  }, [viewScale, originSize]);
 
   //   useEffect(() => {
   //     if (viewBox.height > 0 && !isViewBoxShow) {
