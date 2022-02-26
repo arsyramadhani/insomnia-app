@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import MainLayout from "../../../components/Layout/MainLayout";
+import EditorContent from "../../../components/parts/EditorContent";
 
 import EditorLeftSidebar from "../../../components/parts/EditorLeftSidebar";
 import EditorOptions from "../../../components/parts/EditorOptions";
@@ -53,14 +54,10 @@ export default function Design() {
           <EditorOptions />
         </div>
       )}
-
       <div className="   flex  min-h-full  flex-1  flex-col overflow-y-auto">
         {currentScreen ? (
           <EditorViewBox height={900} width={400} scale={60}>
-            <div className=" flex h-full w-full flex-col justify-center bg-yellow-50 p-4">
-              <h1 className="text-2xl">Testing</h1>
-              asdasdsaasdasdasds
-            </div>
+            <EditorContent />
           </EditorViewBox>
         ) : (
           <BlankEditorView />

@@ -76,7 +76,6 @@ function EditorViewBox({ height, width, scale, children }) {
               style={{
                 height: originSize.height + "px",
                 width: originSize.width + "px",
-                display: "block",
                 transform: "scale(" + viewScale / 100 + ")",
               }}
             >
