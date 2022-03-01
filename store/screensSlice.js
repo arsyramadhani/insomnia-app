@@ -1,32 +1,39 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import supabase from "../services/supabaseClient";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const fetchScreenByCollectionId = createAsyncThunk(
-  "screens/fetchScreenByCollectionId",
-  async (collections_id, thunkAPI) => {
-    const { data, error } = await supabase
-      .from("screens")
-      .select("*")
-      .eq("collections_id", collections_id)
-      .order("order", "ascending");
-    return { data, error };
-  }
-);
+const initialData = [
+  {
+    id: "82o30sadkV",
+    type: "splash",
+    title: "Splash Screen",
+    data: {},
+    config: {},
+  },
+  {
+    id: "98asd723i",
+    type: "welcome",
+    title: "Welcome Screen",
+    data: {
+      title: "Harfia & Riky",
+      date: new Date().toISOString(),
+    },
+    config: {
+      align: "justify-start",
+    },
+  },
+  {
+    id: "29oauosjd",
+    type: "person",
+    title: "Groom & Bride",
+    data: {},
+    config: {},
+  },
+];
 
 export const screensSlice = createSlice({
   name: "screens",
-  initialState: { data: [], status: "idle" },
-  extraReducers: {
-    [fetchScreenByCollectionId.pending]: (state, payload) => {
-      state.status = "loading";
-    },
-    [fetchScreenByCollectionId.fulfilled]: (state, { payload }) => {
-      state.data = payload.data;
-      state.status = "idle";
-    },
-    [fetchScreenByCollectionId.rejected]: (state, payload) => {
-      state.status = "error";
-    },
+  initialState: {
+    data: initialData,
+    status: "idle",
   },
 });
 

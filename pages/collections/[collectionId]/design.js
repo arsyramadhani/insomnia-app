@@ -2,69 +2,45 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "../../../components/Layout/MainLayout";
-import EditorContent from "../../../components/parts/EditorContent";
-import EditorLeftSidebar from "../../../components/parts/EditorLeftSidebar";
-import EditorOptions from "../../../components/parts/EditorOptions";
 import EditorViewBox from "../../../components/parts/EditorViewBox";
-import { fetchScreenByCollectionId } from "../../../store/screensSlice";
-import { filterSection } from "../../../store/sectionsSlice";
+import EditorLeftSidebar from "../../../components/parts/EditorLeftSidebar";
+import EditorContent from "../../../components/parts/EditorContent";
+import EditorOptions from "../../../components/parts/EditorOptions";
 
 export default function Design() {
   const router = useRouter();
   const screens = useSelector((state) => state.screens);
-  const dispatch = useDispatch();
   const [collectionId, setCollectionId] = useState("");
-  const [currentScreen, setCurrentScreen] = useState("");
-  const sections = useSelector((state) => state.sections.data);
-  const currentData = useSelector((state) => state.sections.data);
 
   useEffect(() => {
-    if (router.query.collectionId) {
-      setCollectionId(router.query.collectionId);
-    }
-    if (router.query.p) {
-      setCurrentScreen(router.query.p);
-    }
-    return () => {
-      setCollectionId("");
-      setCurrentScreen("");
-    };
-  }, [router.query]);
-
-  useEffect(() => {
-    if (collectionId !== "") {
-      dispatch(fetchScreenByCollectionId(collectionId));
-      console.log("dispatched");
-    }
-  }, [dispatch, collectionId]);
+    console.log(screens);
+  }, []);
 
   const clickHandler = (param) => {
     router.push(param);
   };
 
-  const theme = {};
-
-  useEffect(() => {
-    currentScreen && dispatch(filterSection(currentScreen));
-  }, [dispatch, currentScreen]);
-
   return (
     <>
       <div className="max-h-full w-72 border-r bg-zinc-50">
-        <EditorLeftSidebar screens={screens} clickHandler={clickHandler} />
+        {screens.data ? (
+          <EditorLeftSidebar screens={screens} clickHandler={clickHandler} />
+        ) : (
+          <div></div>
+        )}
       </div>
       <div className="  relative flex h-full min-h-full  flex-1  flex-col overflow-y-auto">
-        {currentData ? (
+        {screens.data ? (
           <EditorViewBox height={800} width={414} scale={80}>
-            <EditorContent data={currentData} />
+            <EditorContent />
           </EditorViewBox>
         ) : (
           <BlankEditorView />
         )}
       </div>
-      {currentData && (
+      {screens.data && (
         <div className="w-72 border-l bg-zinc-50">
-          <EditorOptions data={currentData} />
+          <EditorOptions />
         </div>
       )}
     </>
