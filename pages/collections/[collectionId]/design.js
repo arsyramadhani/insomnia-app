@@ -12,10 +12,6 @@ export default function Design() {
   const screens = useSelector((state) => state.screens);
   const [collectionId, setCollectionId] = useState("");
 
-  useEffect(() => {
-    console.log(screens);
-  }, []);
-
   const clickHandler = (param) => {
     router.push(param);
   };
